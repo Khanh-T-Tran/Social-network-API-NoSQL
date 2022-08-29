@@ -4,6 +4,8 @@ const thoughtSchema = new Schema ({
     thoughtText: {
         type: String,
         required: true,
-        length:
+        
     }
 })
+
+module.exports = model('Thought', userSchema);

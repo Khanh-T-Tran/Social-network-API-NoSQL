@@ -1,4 +1,6 @@
 const { Schema, model } = require('mongoose');
+// require validator pakage (after npm i validator)
+const validatorPackage = require('validator');
 // Create the blueprint for mongo collection
 const userSchema = new Schema({
     username: {
@@ -6,14 +8,16 @@ const userSchema = new Schema({
         Unique: true,
         required: [true, "Please enter an username"],
         trim: true
-    }
+    },
     email: {
         type: String,
         required: [true, "Email address is required"],
         Unique: true,
-        validate: [validateEmail, "Please enter a valid email address"],
-        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
-    }
+        validate: {
+            validator: validatorPackage.isEmail,
+            message: 'Please provide a valid email',
+        },
+    },
     // Array of _id values referencing the "Thought" model
     thoughts: [
         {
