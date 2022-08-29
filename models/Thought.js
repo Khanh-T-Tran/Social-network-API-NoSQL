@@ -4,6 +4,9 @@ const thoughtSchema = new Schema ({
     thoughtText: {
         type: String,
         required: true,
+        match: '/^.{0,20}$/',       
+    },
+    createdAt: {
         
     }
 })

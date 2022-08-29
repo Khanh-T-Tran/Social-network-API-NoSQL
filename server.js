@@ -1,20 +1,16 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const { User } = require('./models'); // require User schema/collection from the models folder
+const connection = require('./config/connection');
+
+// require User schema/collection from the models folder
+const { User } = require('./models'); 
+
 // setup express app and PORT
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// to connect to production database
-mongoose.connect('mongodb+srv://khanhtran:38c0xSsxbdpcyASo@cluster0.6gpzdie.mongodb.net/social-network-API?retryWrites=true&w=majority')
-    .then(() => {
-        console.log('Connect successful!!!!');
-    })
-    .catch(error => console.log(error));
-
 // Express body-parser
-app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // Create routes for user
 app.post('/api/users', async (req, res) => {
