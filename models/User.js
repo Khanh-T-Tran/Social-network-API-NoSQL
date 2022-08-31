@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
 // require validator pakage (after npm i validator)
 const validatorPackage = require('validator');
-// Create the blueprint for mongo collection
+// Create the user blueprint for mongo collection
 const userSchema = new Schema(
     {
         username: {
@@ -53,4 +53,5 @@ userSchema.virtual("friendCount").get(function () {
   });
 
 //  create and export the collection so we can use it in other files
-module.exports = model('User', userSchema); // 1st para: name of the collection, 2nd para: the blueprint that we use for this collection.
+// 1st para: name of the collection, 2nd para: the blueprint that we use for this collection.
+module.exports = model('User', userSchema); 
