@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 
 // Wrap Mongoose around local connection to MongoDB
 // to connect to production database
-mongoose.connect('mongodb+srv://khanhtran:38c0xSsxbdpcyASo@cluster0.6gpzdie.mongodb.net/social-network-API?retryWrites=true&w=majority')
-    .then(() => {
-        console.log('Connect successful!!!!');
-    })
-    .catch(error => console.log(error));
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/social-network-api', {
+    useFindAndModify: false, // for using Model.findByIdUpdate()
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
 
 // Export connection 
 module.exports = mongoose.connection;
