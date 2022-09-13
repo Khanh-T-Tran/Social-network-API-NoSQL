@@ -213,7 +213,55 @@ app.delete('/api/thoughts/:thoughtId', async (req, res) => {
     }
 });
 
+// Create routes for REACTIONS
+// Post route for posting new reactions
+app.post('/api/thoughts/:thoughtId/reactions', async (req, res) => {
+    try {
+        const thought = await Thought.findOneAndUpdate(
+            {
+                _id: req.params.thoughtId
+            },
+            {
+                $addToSet: {
+                    reactions: req.body,
+                }
+            },
+            {
+                new: true,
+            }
+        ).populate('reactions');
 
+        res.status(200).json(thought);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error });
+    }
+});
+
+// Delete route for deleting a reaction by ID
+app.delete('/api/thoughts/:thoughtId/reactions/:reactionId', async (req, res) => {
+    try {
+        const deletedReaction = await Thought.findOneAndUpdate(
+            {
+                _id: req.params.thoughtId,
+            },
+            {
+                $pull: {
+                    reactions: {
+                        reactionId: req.params.reactionId,
+                    },
+                },
+            },
+            {
+                new: true,
+            });
+
+        res.status(200).json(deletedReaction);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error });
+    }
+});
 
 // to start express server
 // connection.once('open', () => {
