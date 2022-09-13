@@ -89,6 +89,53 @@ app.delete('/api/users/:userId', async (req, res) => {
     }
 })
 
+// FRIEND
+// post route to add a new friend to a user's friend list
+app.post('/api/users/:userId/friends/', async (req, res) => {
+    try {
+        console.log(req.params.userId);
+        const newFriend = await User.findOne(req.body);
+        console.log(req.body, newFriend);
+
+        const addedFriend = await User.findByIdAndUpdate(
+            req.params.userId,
+            {
+                $addToSet: {
+                    friends: newFriend._id,
+                }
+            },
+            {
+                new: true,
+            },
+        ).populate('friends');
+
+        res.status(200).json(addedFriend);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error });
+    }
+});
+
+// delete route to remove a friend from a user's friend list
+app.delete('/api/users/:userId/friends/:friendId', async (req, res) => {
+    try {
+        const deletedFriend = await User.findByIdAndUpdate(
+            req.params.userId,
+            {
+                $pull: {
+                    friends: req.params.friendId,
+                }
+            },
+            {
+                new: true,
+            }
+        ).populate('friends');
+        res.status(200).json(deletedFriend);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error });
+    }
+});
 
 
 
