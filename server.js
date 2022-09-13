@@ -1,9 +1,11 @@
 const express = require('express');
 const connection = require('./config/connection');
+const mongoose = require('mongoose');
+const ObjectId = require('mongodb').ObjectId;
 // const routes = require('./routes');
 
 // require User schema/collection from the models folder
-const { User } = require('./models');
+const { User, Thought } = require('./models');
 
 // setup express app and PORT
 const app = express();
@@ -89,7 +91,7 @@ app.delete('/api/users/:userId', async (req, res) => {
     }
 })
 
-// FRIEND
+// Create routes for FRIEND
 // post route to add a new friend to a user's friend list
 app.post('/api/users/:userId/friends/', async (req, res) => {
     try {
@@ -137,7 +139,79 @@ app.delete('/api/users/:userId/friends/:friendId', async (req, res) => {
     }
 });
 
+// Create routes for THOUGHTS
+// get route for getting all thoughts
+app.get('/api/thoughts', async (req, res) => {
+    try {
+        const allThoughts = await Thought.find();
+        res.status(200).json(allThoughts);
+    } catch (error) {
+        res.status(500).json({ error });
+    }
+});
 
+// get route for getting a thought by ID
+app.get('/api/thoughts/:thoughtId', async (req, res) => {
+    try {
+        const oneThought = await Thought.findById({
+            _id: req.params.thoughtId,
+        });
+        res.status(200).json(oneThought);
+    } catch (error) {
+        res.status(500).json({ error });
+    }
+});
+
+// post route for posting new thoughts
+app.post('/api/thoughts', async (req, res) => {
+    try {
+        const newThought = await Thought.create(req.body);
+
+        const user = await User.findByIdAndUpdate(
+            req.body.userId,
+            {
+                $addToSet: {
+                    thoughts: newThought._id,
+                }
+            },
+            {
+                new: true,
+            }
+        ).populate('thoughts');
+        console.log(user);
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ error });
+    }
+});
+
+// put route for updating a thought by its ID
+app.put('/api/thoughts/:thoughtId', async (req, res) => {
+    try {
+        const updatedThought = await Thought.findByIdAndUpdate(
+            req.params.thoughtId,
+            { ...req.body },
+            { new: true },
+        );
+
+        res.status(200).json(updatedThought);
+    } catch (error) {
+        res.status(500).json({ error });
+    }
+});
+
+// delete route for deleting a thought by its ID
+app.delete('/api/thoughts/:thoughtId', async (req, res) => {
+    try {
+        const deletedThought = await Thought.findByIdAndDelete({
+            _id: ObjectId(req.params.thoughtId)
+        });
+
+        res.status(200).json(deletedThought);
+    } catch (error) {
+        res.status(500).json({ error });
+    }
+});
 
 
 // to start express server
