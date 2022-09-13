@@ -214,6 +214,7 @@ app.delete('/api/thoughts/:thoughtId', async (req, res) => {
 });
 
 
+
 // to start express server
 // connection.once('open', () => {
     app.listen(PORT, () => console.log("server started successfully!!"));

@@ -39,7 +39,8 @@ const thoughtSchema = new Schema({
     thoughtText: {
         type: String,
         required: true,
-        match: '/^.{1,280}$/',
+        minLength: [1],
+        maxLength: [128],
     },
     createdAt: {
         type: Date,
