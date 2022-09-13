@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const { User } = require('../../models');
 
 // Create routes for user
 // Post route for users
