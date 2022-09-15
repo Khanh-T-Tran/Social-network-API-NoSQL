@@ -241,6 +241,8 @@ app.post('/api/thoughts/:thoughtId/reactions', async (req, res) => {
 // Delete route for deleting a reaction by ID
 app.delete('/api/thoughts/:thoughtId/reactions/:reactionId', async (req, res) => {
     try {
+        console.log("thoughtID line 244",req.params.thoughtId);
+        console.log("thoughtID line 245",req.params.reactionId);
         const deletedReaction = await Thought.findOneAndUpdate(
             {
                 _id: req.params.thoughtId,
@@ -248,14 +250,16 @@ app.delete('/api/thoughts/:thoughtId/reactions/:reactionId', async (req, res) =>
             {
                 $pull: {
                     reactions: {
-                        reactionId: req.params.reactionId,
+                        _id: req.params.reactionId,
                     },
                 },
+                
             },
             {
+                runValidators: true,
                 new: true,
-            });
-
+            }).exec();
+console.log("reaction",deletedReaction);
         res.status(200).json(deletedReaction);
     } catch (error) {
         console.log(error);
