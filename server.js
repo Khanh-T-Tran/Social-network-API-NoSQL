@@ -241,8 +241,8 @@ app.post('/api/thoughts/:thoughtId/reactions', async (req, res) => {
 // Delete route for deleting a reaction by ID
 app.delete('/api/thoughts/:thoughtId/reactions/:reactionId', async (req, res) => {
     try {
-        console.log("thoughtID line 244",req.params.thoughtId);
-        console.log("thoughtID line 245",req.params.reactionId);
+        // console.log("thoughtID line 244",req.params.thoughtId);
+        // console.log("thoughtID line 245",req.params.reactionId);
         const deletedReaction = await Thought.findOneAndUpdate(
             {
                 _id: req.params.thoughtId,
@@ -259,7 +259,7 @@ app.delete('/api/thoughts/:thoughtId/reactions/:reactionId', async (req, res) =>
                 runValidators: true,
                 new: true,
             }).exec();
-console.log("reaction",deletedReaction);
+// console.log("reaction",deletedReaction);
         res.status(200).json(deletedReaction);
     } catch (error) {
         console.log(error);
@@ -268,7 +268,7 @@ console.log("reaction",deletedReaction);
 });
 
 // to start express server
-// connection.once('open', () => {
+
     app.listen(PORT, () => console.log("server started successfully!!"));
 
-// })
+
