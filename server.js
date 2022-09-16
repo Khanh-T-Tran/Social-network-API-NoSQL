@@ -2,7 +2,7 @@ const express = require('express');
 const connection = require('./config/connection');
 const mongoose = require('mongoose');
 const ObjectId = require('mongodb').ObjectId;
-// const routes = require('./routes');
+const routes = require('./routes');
 
 // require User schema/collection from the models folder
 const { User, Thought } = require('./models');
@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // express router
-// app.use(routes);
+app.use(routes);
 
 // Create routes for USER
 // Post route for posting new users
