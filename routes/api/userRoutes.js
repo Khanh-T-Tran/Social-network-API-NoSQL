@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const ObjectId = require('mongodb').ObjectId;
-// const { Router } = require('express');
 const { User, Thought } = require('../../models');
+
 // Create routes for USER
 // Post route for posting new users
 router.post('/', async (req, res) => {
@@ -77,11 +77,8 @@ router.delete('/:userId', async (req, res) => {
 // Create routes for FRIEND
 // post route to add a new friend to a user's friend list
 router.post('/:userId/friends', async (req, res) => {
-    try {
-        console.log(req.params.userId);
+    try { 
         const newFriend = await User.findOne(req.body);
-        console.log(req.body, newFriend);
-
         const addedFriend = await User.findByIdAndUpdate(
             req.params.userId,
             {

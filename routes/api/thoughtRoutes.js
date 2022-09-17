@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const ObjectId = require('mongodb').ObjectId;
-// const { Router } = require('express');
-const { User,Thought } = require('../../models');
+const { User, Thought } = require('../../models');
 
 // Create routes for THOUGHTS
 // get route for getting all thoughts
@@ -106,25 +105,23 @@ router.post('/:thoughtId/reactions', async (req, res) => {
 // Delete route for deleting a reaction by ID
 router.delete('/:thoughtId/reactions/:reactionId', async (req, res) => {
     try {
-        // console.log("thoughtID line 244",req.params.thoughtId);
-        // console.log("thoughtID line 245",req.params.reactionId);
         const deletedReaction = await Thought.findOneAndUpdate(
             {
                 _id: req.params.thoughtId,
             },
+
             {
                 $pull: {
                     reactions: {
                         _id: req.params.reactionId,
                     },
                 },
-                
             },
+
             {
                 runValidators: true,
                 new: true,
             }).exec();
-// console.log("reaction",deletedReaction);
         res.status(200).json(deletedReaction);
     } catch (error) {
         console.log(error);
