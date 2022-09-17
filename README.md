@@ -35,10 +35,9 @@ Moment.js
 
 ```
 ## Deployment
-```
-View all demo videos at: 
-User routes: https://drive.google.com/file/d/1dohfZ6MdQptWlbuujD_aZONqJSO_ymD3/view
-Thought routes: https://drive.google.com/file/d/1edo66dHUwjKzHqQFsOxk-V5GcW4EEcTD/view
-Friends and reactions routes: https://drive.google.com/file/d/1RixEbXg-z7HVg8KmxKaIGPxfpqu1zPZf/view
 
-```
+View all demo videos at: 
+
+User routes: https://drive.google.com/file/d/1dohfZ6MdQptWlbuujD_aZONqJSO_ymD3/view  
+Thought routes: https://drive.google.com/file/d/1edo66dHUwjKzHqQFsOxk-V5GcW4EEcTD/view  
+Friends and reactions routes: https://drive.google.com/file/d/1RixEbXg-z7HVg8KmxKaIGPxfpqu1zPZf/view  
